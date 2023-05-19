@@ -34,9 +34,15 @@ class LocationPom
   end
 
   def fill(model)
-    select_state(model.state)
-    input_postal_code(model.postal_code)
-    populate_purpose(model.purpose)
+    if model.state
+      select_state(model.state)
+    end
+    if model.postal_code
+      input_postal_code(model.postal_code)
+    end
+    if model.purpose
+      populate_purpose(model.purpose)
+    end
     click_continue
   end
 end
