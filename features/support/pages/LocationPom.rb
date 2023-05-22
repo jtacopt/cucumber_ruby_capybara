@@ -1,36 +1,34 @@
 class LocationPom
 
-  STATE = { css: "[data-test-id='modal-popup__location'] select" }.freeze
+  STATE = { css: "[data-test-id=modal-popup__location] select" }.freeze
   POSTAL_CODE = { css: "[data-test-id='modal-popup__location'] input[type=number]" }.freeze
   PURPOSE_PRIVATE = { css: "label:has([value=P]) div" }.freeze
   PURPOSE_BUSINESS = { css: "label:has([value=B]) div" }.freeze
   CONTINUE = { css: "[data-test-id=state-selected-modal__close]" }.freeze
 
-  def initialize(driver)
-    @driver = driver
+  def initialize(page)
+    @page = page
   end
 
   def select_state(state)
-    select = Selenium::WebDriver::Support::Select.new(@driver.find_element(STATE))
-    select.select_by(:text, state)
+    select = @page.find(STATE[:css])
+    select.select(state)
   end
 
   def input_postal_code(postal_code)
-    @driver.find_element(POSTAL_CODE).send_keys(postal_code)
+    @page.fill_in POSTAL_CODE[:css], with: postal_code
   end
 
   def populate_purpose(purpose)
     if purpose.downcase == 'private'
-      @driver.find_element(PURPOSE_PRIVATE).click
+      @page.find(PURPOSE_PRIVATE[:css]).click
     else
-      @driver.find_element(PURPOSE_BUSINESS).click
+      @page.find(PURPOSE_BUSINESS[:css]).click
     end
   end
 
   def click_continue
-    wait = Selenium::WebDriver::Wait.new(timeout: 10)
-    wait.until { @driver.find_element(CONTINUE).attribute('disabled') != 'disabled' }
-    @driver.find_element(CONTINUE).click
+    @page.find(CONTINUE[:css]).click
   end
 
   def fill(model)

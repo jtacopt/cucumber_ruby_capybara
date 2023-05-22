@@ -5,21 +5,21 @@ Given(/^The user set the filter as bellow$/) do |table|
     price = row['price']
     kilometers = row['kilometers']
 
-    current_url = @driver.current_url
+    current_url = page.current_url
     params = "model=#{model}&userPriceGroupPriceSlider=#{price}&mileageSlider=#{kilometers}"
     url_with_parameters = "#{current_url}?#{params}"
-    @driver.get(url_with_parameters)
+    visit url_with_parameters
   end
 
 end
 
 When(/^The user sort the displayed result by "(.*?)"$/) do |sort_method|
-  @results = DCPResultsPom.new(@driver)
+  @results = DCPResultsPom.new(page)
   @results.sort(sort_method)
 end
 
 Then(/^The results should Match with the applied filter$/) do
-  @results = DCPResultsPom.new(@driver)
+  @results = DCPResultsPom.new(page)
   car_list = @results.get_cars
   car_list.each do |carPom|
     car = carPom.get_car

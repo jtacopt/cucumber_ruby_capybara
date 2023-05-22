@@ -5,8 +5,8 @@ class DCPCarPom
   YEAR = '.dcp-cars-product-tile-used-car-info :has(span.dcp-cars-product-tile-used-car-info-text):nth-child(2)'.freeze
   FUEL_TYPE = '.dcp-cars-product-tile-used-car-info :has(span.dcp-cars-product-tile-used-car-info-text):nth-child(3)'.freeze
 
-  def initialize(driver, car_element)
-    @driver = driver
+  def initialize(page, car_element)
+    @page = page
     @car_element = car_element
   end
 
@@ -53,7 +53,7 @@ class DCPCarPom
   private
 
   def read_text(element, selector)
-    element.find_element(:css, selector).text
+    element.find(:css, selector).text
   end
 end
 

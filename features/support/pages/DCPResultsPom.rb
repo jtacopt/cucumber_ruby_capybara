@@ -3,8 +3,8 @@ class DCPResultsPom
   SORTING = '#srp-result select'.freeze
   LOADER = '.dcp-loader'.freeze
 
-  def initialize(driver)
-    @driver = driver
+  def initialize(page)
+    @page = page
   end
 
   def sort(sorting_method)
@@ -21,12 +21,12 @@ class DCPResultsPom
   attr_reader :driver
 
   def select_by_visible_text(selector, text)
-    select = Selenium::WebDriver::Support::Select.new(driver.find_element(:css, selector))
-    select.select_by(:text, text)
+    select = @page.find(:css, selector)
+    select.select(text)
   end
 
   def find_element_list(selector)
-    driver.find_elements(:css, selector)
+    @page.all(:css, selector)
   end
 
   def wait
