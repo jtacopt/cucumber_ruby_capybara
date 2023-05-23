@@ -19,6 +19,7 @@ When(/^The user sort the displayed result by "(.*?)"$/) do |sort_method|
 end
 
 Then(/^The results should Match with the applied filter$/) do
+  sleep 3
   @results = DCPResultsPom.new(page)
   car_list = @results.get_cars
   car_list.each do |carPom|
